@@ -1,0 +1,12 @@
+POST http://localhost:5000/notebook
+Content-Type: application/json
+
+{
+    "note_title": "API Fetch",
+    "note_content": "Fech the API during the break period",
+    "create_date": "2023-7-28"
+}
+
+
+###get all the notes
+GET  http://localhost:5000/notebook
