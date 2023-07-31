@@ -1,12 +1,12 @@
 const express = require('express');
 const mssql = require ('mssql')
 const  {sqlConfig} = require('./Config/config')
-const { router } = require('./Routes/routes')
+const routes = require('./Routes/routes')
 
 const app = express();
 
-app.use('/notebook', router);
 app.use(express.json())
+app.use("/notes", routes);
 
 app.use((err, req, res, next) => {
     console.log(err.message);

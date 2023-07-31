@@ -1,4 +1,4 @@
-POST http://localhost:5000/notebook
+POST http://localhost:5000/notes
 Content-Type: application/json
 
 {
@@ -9,4 +9,17 @@ Content-Type: application/json
 
 
 ###get all the notes
-GET  http://localhost:5000/notebook
+GET  http://localhost:5000/notes
+
+###get one note
+GET  http://localhost:5000/notes/548c4e50-3e5b-4ad3-a451-0019b3224073
+
+###Update one note
+PUT  http://localhost:5000/notes/548c4e50-3e5b-4ad3-a451-0019b3224073
+Content-Type: application/json
+
+{
+    "note_title": "API get",
+    "note_content": "Get the API during the break period",
+    "create_date": "2024-10-28"
+}

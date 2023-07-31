@@ -56,7 +56,86 @@ const getAllNotes = async (req, res) => {
     }
 }
 
+const getOneNote = async (req, res) => {
+    try {
+        const {id} = req.params
+
+        const pool = await mssql.connect(sqlConfig)
+
+        const notebook = (await pool.request().input('id',id).execute('getOneNote')).recordset
+
+        return res.json({
+            Notebook: notebook
+        })
+    } catch (error) {
+        return res.json({ error })
+    }
+}
+
+const updateNote = async (req, res) => {
+    try {
+        const {id} = req.params
+
+        const pool = await mssql.connect(sqlConfig)
+
+        const {note_title, note_content, create_date} = req.body
+
+        const result = (await pool.request()
+        .input('id', id)
+        .input('note_title', note_title)
+        .input('note_content', note_content)
+        .input('create_date', create_date)
+
+        .execute('updateNote'))
+
+        console.log(result);
+
+        if (result.rowsAffected ==1){
+            res.json({
+                message: 'Project updated'
+            })
+        }else{
+            res.json({
+                message: 'Project not updated'
+            })
+        }
+
+    } catch (error) {
+        return res.json({ error })
+    }
+
+}
+
+const deleteNote = async (req, res) => {
+    try {
+        const {id} = req.params
+
+        const pool = await mssql.connect(sqlConfig)
+
+        const result = await pool.request()
+        .input('id',id)
+        .execute('deleteNote').recordset
+
+        if(result.rowsAffected ==1) {
+            res.json({
+                message: 'Note deleted successfully'
+            })
+        }else{
+            res.json({
+                message: 'Note not deleted successfully'
+            })
+        }
+
+    } catch (error) {
+        return res.json({ error })
+    }
+}
+
+
 module.exports = {
     createNoteBook,
-    getAllNotes
+    getAllNotes,
+    getOneNote,
+    updateNote,
+    deleteNote
 }

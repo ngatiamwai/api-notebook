@@ -1,0 +1,4 @@
+CREATE OR ALTER PROCEDURE getOneNote (@id VARCHAR(255))
+AS BEGIN 
+SELECT * FROM NotesTable WHERE id = @id
+END
