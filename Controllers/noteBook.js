@@ -33,7 +33,7 @@ const createNoteBook = async (req, res) => {
         
         console.log(result);
 
-        res.json({
+        return res.status(200).json({
             message: 'Note created',
             Notebook: newNote,
         })
@@ -109,20 +109,22 @@ const updateNote = async (req, res) => {
 const deleteNote = async (req, res) => {
     try {
         const {id} = req.params
+        // console.log(id);
 
         const pool = await mssql.connect(sqlConfig)
 
         const result = await pool.request()
         .input('id',id)
-        .execute('deleteNote').recordset
+        .execute('deleteNote')
 
-        if(result.rowsAffected ==1) {
+        // console.log(result);
+        if(result.rowsAffected == 1) {
             res.json({
                 message: 'Note deleted successfully'
             })
         }else{
             res.json({
-                message: 'Note not deleted successfully'
+                message: 'Note not deleted'
             })
         }
 
